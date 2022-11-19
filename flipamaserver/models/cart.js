@@ -11,8 +11,9 @@ const orderDetails = new Schema({
         date : Date,
         product_list : [
             {
-                product_type : String,
                 product_name : String,
+                product_price : Number,
+                total_price : Number,
                 quantity : Number
             }
         ],

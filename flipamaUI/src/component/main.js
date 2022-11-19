@@ -1,14 +1,15 @@
 import React ,{useState,createContext} from 'react';
 import './main.css';
 import CartChanger from './cartChanger';
-import {BrowserRouter as Router, Routes , Route, Link, useNavigate} from 'react-router-dom';
+import {BrowserRouter as Router, Routes , Route, Link} from 'react-router-dom';
 import UserCart from './userCart';
 import SignIn from './signin';
 import SignUp from './signup';
-import store from '../store';
+import {useSelector} from 'react-redux'
 const userContext = createContext([]);
 export default function StoreCart(){
     const [disable , setDisable] = useState(true);
+    const counter = useSelector(state=>state.totalCount);
     const [user , setUser] = useState({
         userId : '',
         accessToken : ''
@@ -18,12 +19,11 @@ export default function StoreCart(){
         <div className='main'>
             <header>
                 <h1>FlipAma</h1>
-                <input type='text' placeholder='search'></input>
                 {disable && <Link to='/signin'><button id='login' onClick={()=>setDisable(false)}>login</button></Link>}
                 {disable && <Link to='/signup'><button id='signup' onClick={()=>setDisable(false)}>Sign Up</button></Link>}
                 {!disable && <Link to='/'><button id="logout" onClick={()=>{setUser({userId:'',accessToken:''});setDisable(true);}}>Logout</button></Link>}
                 <h3>{user.userId.split('@')[0] || "Hello Guest"}</h3>
-                <Link to='/userCart'><button id='cart'><img src={require('../image/shopping-cart.png')} alt='cart'></img><span id='counter'>{store.getState().totalCount || 0}</span></button></Link>
+                <Link to='/userCart'><button id='cart'><img src={require('../image/shopping-cart.png')} alt='cart'></img><span id='counter'>{counter || 0}</span></button></Link>
             </header>
             <userContext.Provider value={[user,setUser]}>
             <Routes>

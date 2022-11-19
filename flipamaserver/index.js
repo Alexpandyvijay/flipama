@@ -74,7 +74,6 @@ router.post('/signup', async (req,res)=>{
 
 router.post('/stockupdate', async (req,res)=>{
     let token = req.headers['authorization'];
-    token = token.split(' ')[1];
     const newStock = {...req.body};
     if(!token){
         res.json({
@@ -130,7 +129,6 @@ router.post('/stockupdate', async (req,res)=>{
 
 router.get('/products/:product_type', async(req,res)=>{
     let token = req.headers['authorization'];
-    // token = token.split(' ')[1];
     let rangeFrom = req.query.from;
     let rangeTo = req.query.to;
     if(!token){
@@ -171,7 +169,6 @@ router.get('/products/:product_type', async(req,res)=>{
 
 router.post("/order", async (req,res)=>{
     let token = req.headers['authorization'];
-    // token = token.split(' ')[1];
     const orderList = req.body.orderList;
     const total = req.body.total;
     if(!token){
@@ -235,6 +232,30 @@ router.post("/order", async (req,res)=>{
     }
 })
 
+router.get('/history',async(req,res)=>{
+    let token = req.headers['authorization'];
+    if(!token){
+        res.json({
+            status : 'failed',
+            message : 'unauthorized'
+        })
+    }else{
+        let {userId} = verify(token, process.env.JWT_SECRET_KEY);
+        let userExist = await orderInfo.findOne({userId : userId});
+        if(!userExist){
+            res.json({
+                status : 'failed',
+                message : 'no history to show'
+            })
+        }else{
+            res.json({
+                status : 'success',
+                message : 'purchase History',
+                data : userExist.order
+            })
+        }
+    }
+})
 
 app.use('/',router);
 mongoose.connect(process.env.MONGO_URL,()=>(console.log('database connected successfully..')));

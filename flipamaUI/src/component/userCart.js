@@ -1,118 +1,50 @@
-import React ,{useEffect, useMemo, useState} from "react";
+import React,{useContext,useState} from "react";
 import './userCart.css';
 import {useNavigate} from 'react-router-dom';
-import store from "../store";
-
-const AddCart = (props)=>{
-    const {data,setData} = {...props};
-    const [count,setCount]=useState(1);
-    const decHandler = () => {
-        let newupdate = {
-            totalCount : data.totalCount-1,
-            totalAmount : data.totalAmount-parseInt(props.obj.product_price)
-        }
-        store.dispatch({
-            type : 'totalCount',
-            playload : newupdate.totalCount
-        })
-        store.dispatch({
-            type : 'totalAmount',
-            playload : newupdate.totalAmount
-        })
-        store.dispatch({
-            type : 'dec',
-            playload : props.obj._id
-        })
-        setData({...data,...newupdate});
-        count>0?setCount(count-1):setCount(0);
-    }
-    const incHandler=()=>{
-        let newupdate = {
-            totalCount : data.totalCount+1,
-            totalAmount : data.totalAmount+parseInt(props.obj.product_price)
-        }
-        store.dispatch({
-            type : 'totalCount',
-            playload : newupdate.totalCount
-        })
-        store.dispatch({
-            type : 'totalAmount',
-            playload : newupdate.totalAmount
-        })
-        store.dispatch({
-            type : 'inc',
-            playload : props.obj._id
-        })
-        setData({...data,...newupdate});
-        setCount(count+1);
-    }
-    const removeHandler=()=>{
-        store.dispatch({
-            type : 'remove',
-            playload : props.obj._id
-        })
-        props.removeElement(props.obj._id);
-    }
-    return(
-        <tr>
-            <td>{props.obj.product_name}</td>
-            <td><button onClick={decHandler}>-</button><span>{count}</span><button onClick={incHandler}>+</button></td>
-            <td>{props.obj.product_price}</td>
-            <td>{count * parseInt(props.obj.product_price)}</td>
-            <td><button id="remove" onClick={removeHandler}>remove</button></td>
-        </tr>
-    );
-}
+import { useSelector, useDispatch} from "react-redux";
+import AddCart from "./cartcontent";
+import axios from 'axios';
+import {userContext} from "./main.js";
 
 export default function UserCart() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [list,setList]=useState([]);
-    const [data,setData]=useState({
-        totalCount : 0,
-        totalAmount : 0
-    })
-
-    useEffect(()=>{
-        let listofobj = store.getState();
-        try{
-            if(listofobj.orderList.length){
-                setList(listofobj.orderList);
-            }
-        }catch{
-            setList([]);
-        }
-    },[])
-
-    const removeElement = (id) =>{
-        let newList = list.filter((item)=>{
-            if(item._id!==id){
-                return item;
+    const [pop , setPop] = useState(false);
+    const [user] = useContext(userContext);
+    let totalItem = useSelector(state=>state.totalCount);
+    let totalValue = useSelector(state=>state.totalAmount);
+    let listOfItem = useSelector(state=>state.orderList);
+    const handlePayment = async ()=>{
+        let res = await axios.post('http://localhost:5000/order',{orderList : listOfItem,total : totalValue},{
+            headers : {
+                "authorization" : user.accessToken
             }
         })
-        setList(newList);
+        if(res.data.status === 'failed'){
+            alert('Please login');
+            navigate('/')
+        }else{
+            dispatch({
+                type : 'clear'
+            })
+            setTimeout(()=>setPop(true),2000)
+        }
+    }
+    const Popup=()=>{
+        return(
+            <div className="popup" onClick={()=>setPop(false)}>
+                <div className="inside">
+                    <img src={require('../image/check.png')} alt='img..'></img>
+                    <h1>Success</h1>
+                    <h5>Your payment was processed</h5>
+                </div>
+            </div>
+        );
     }
 
-    useMemo(()=>{
-        let totalvalue = 0;
-        for(let obj of list){
-            totalvalue += parseInt(obj.product_price);
-        }
-        let newupdate = {
-            totalCount : list.length,
-            totalAmount : totalvalue
-        }
-        store.dispatch({
-            type : 'totalCount',
-            playload : newupdate.totalCount
-        })
-        store.dispatch({
-            type : 'totalAmount',
-            playload : newupdate.totalAmount
-        })
-        setData({...data,...newupdate});
-    },[list])
-
     return(
+        <>
+        {pop && <Popup></Popup>}
         <div className="userCart">
             <div>
                 <button onClick={()=>(navigate('/'))}>Back</button>
@@ -128,21 +60,25 @@ export default function UserCart() {
             </tr>
             </thead>
             <tbody>
-                {list===0?"":list.map((item,i)=>{
-                    return <AddCart key={i+'b'} obj={item} data={data} setData={setData} removeElement={removeElement}/>
+                {listOfItem.length===0?<tr><td></td></tr>:listOfItem.map((item,i)=>{
+                    return <AddCart key={i+'b'} obj={item}/>
                 })} 
              </tbody>
              <tfoot>
                 <tr>
                     <td>-</td>
-                    <td style={{backgroundColor : "#318CE7",color:'white'}}>{data.totalCount}</td>
+                    <td style={{backgroundColor : "#318CE7",color:'white'}}>{totalItem}</td>
                     <td>Total</td>
-                    <td style={{backgroundColor : "#318CE7",color:'white'}}>{data.totalAmount}</td>
+                    <td style={{backgroundColor : "#318CE7",color:'white'}}>{totalValue}</td>
                     <td>-</td>
                 </tr>
              </tfoot>
             </table>
+            <div>
+                <button onClick={handlePayment}>Proceed to pay</button>
+            </div>
 
         </div>
+        </>
     );
 }

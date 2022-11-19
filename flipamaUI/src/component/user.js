@@ -2,12 +2,10 @@ import React, { useEffect,useState,useContext} from "react";
 import axios from 'axios';
 import Cart from './cart';
 import {userContext} from './main.js';
-import { useNavigate } from "react-router-dom";
 
 export default function User(){
     let navbar = ['electronics','Fashion','Furniture','Grocery'];
-    const navigate = useNavigate();
-    const [user,setUser] = useContext(userContext);
+    const [user] = useContext(userContext);
     const [cart,setCart]=useState([]);
     const [category,setCategory] = useState({
         product_type : 'electronics',
@@ -51,7 +49,7 @@ export default function User(){
                 </div>
                 <div className='product-list'>
                     {
-                        cart==="no Product"||cart==="Please login"?<h3>{cart}</h3>:cart.map((item,i)=>{
+                        cart==="no Product"||cart==="Please login"?<h3 id='login'>{cart}</h3>:cart.map((item,i)=>{
                             return <Cart key={i} obj={item}/>
                         })
                     }

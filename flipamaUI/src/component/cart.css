@@ -5,6 +5,7 @@
     background-color: white;
     border-radius: 20px;
     margin: 1em 0em;
+    cursor: pointer;
 }
 .cart-box > div > h1 {
     border-radius: 20px;

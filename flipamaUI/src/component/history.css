@@ -1,0 +1,48 @@
+.history {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 60vh;
+    overflow-y: scroll;
+    width: 100%;
+}
+.hisTable {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.hisTable > h3 , .history h3{
+    border: none;
+    padding: 0.5em 1.5em ;
+    border-radius: 10px;
+    font-size: medium;
+    font-weight: 600;
+    color:#318CE7;
+    background-color: white;
+}
+.hisTable table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 60%;
+    background-color: white;
+    border-radius: 20px;
+    padding: 1em;
+}
+.hisTable td {
+    font-size: medium;
+    font-weight: 400;
+    padding: 0.5em;
+    text-align: center;
+}
+.hisTable th {
+    border-bottom: 3px solid #318CE7;
+    color: #318CE7;
+    font-size: medium;
+    font-weight: 500;
+    padding: 1em;
+}
+.hisTable tr:last-child > td{
+    border:none;
+}
