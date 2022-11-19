@@ -1,0 +1,65 @@
+.userCart {
+    display : flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 70vh;
+}
+.userCart table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 60%;
+    background-color: white;
+    border-radius: 20px;
+    padding: 1em;
+}
+.userCart td {
+    font-size: larger;
+    font-weight: 600;
+    padding: 0.5em;
+    text-align: center;
+}
+.userCart th {
+    border-bottom: 3px solid #318CE7;
+    color: #318CE7;
+    font-size: larger;
+    font-weight: 600;
+    padding: 1em;
+}
+.userCart tr:last-child > td{
+    border:none;
+}
+.userCart > table button {
+    border: none;
+    background: #318CE7;
+    color: white;
+    font-weight: 600;
+    font-size: larger;
+    border-radius: 10px;
+    width: 30px;
+    height: 30px;
+}
+.userCart span {
+    color: #318CE7;
+    padding: 0.5em;
+}
+.userCart > div >  button {
+    border: none;
+    background: #318CE7;
+    color: white;
+    font-weight: 600;
+    font-size: larger;
+    border-radius: 10px;
+    padding: 0.5em 1em;
+    margin: 1em;
+}
+.userCart > div {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+#remove {
+    width: fit-content;
+}

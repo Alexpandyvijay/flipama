@@ -1,0 +1,83 @@
+.App {
+  display: flex;
+  background-color: aliceblue;
+  min-height: 100vh;
+  max-height: max-content;
+  margin: 0px;
+  padding: 0px;
+}
+.align {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 300px;
+  max-width: 400px;
+  background-color: skyblue;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 1em;
+}
+.auth>form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  justify-content: center;
+  align-items: flex-start;
+}
+.auth > h1 {
+  color: white;
+}
+.auth label {
+  color: white;
+  margin: 20px 0px 7px 0px;
+  font-weight: 400;
+  font-size: large;
+  font-size: small;
+}
+.auth input {
+  border: 1px solid gray;
+  width: 200px;
+  height: 30px;
+  padding-left: 15px;
+  border-radius: 5px;
+}
+
+.auth input:focus {
+  outline: none;
+}
+
+.auth button {
+  margin: 30px 0px 20px 0px;
+  border: none;
+  color: white;
+  background-color: gray;
+  font-size: larger;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px 3px rgba(0,0,0,0.2);
+}
+.auth button:hover {
+  opacity: 0.7;
+}
+.welcome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: max-content;
+  min-height: 100vh;
+}
+.auth > form > p {
+  font-size: small;
+  color: red;
+  margin-top: 5px;
+}
+

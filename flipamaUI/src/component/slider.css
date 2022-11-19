@@ -1,0 +1,28 @@
+.slider {
+    margin: 1em 5em;
+    width: calc(100%-10em);
+    background-color: plum;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.2);
+}
+.slider > h1 {
+    color: white;
+    margin: 2em;
+}
+.dot {
+    display: flex;
+}
+.dot > span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 5px;
+    background-color: white;
+}
+.dot >span:hover{
+    background-color: black;
+}

@@ -1,0 +1,52 @@
+.admin {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    background-color: white;
+    padding: 1em;
+    margin: 1em;
+}
+.admin > h1 {
+    background-color: palevioletred;
+    color: white;
+    padding: 1em;
+    border-radius: 10px;
+    margin: 0em 0em 0.5em 0em;
+}
+.admin > form > label {
+    font-size: medium;
+    font-weight: 600;
+    color: white;
+    background-color: #318CE7;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+    margin-right: 1em;
+}
+.admin > form > input {
+    height: 2.5em;
+    border: none;
+    padding: 0px 0.5em ;
+    border-radius: 10px;
+    font-size: medium;
+    font-weight: 400;
+    color: gray;
+    background-color:azure;
+    margin: 0.5em 0em 1.5em 0em;
+    border: 1px solid gray;
+}
+.admin > form > input:focus {
+    outline: none;
+}
+.admin > form > input::placeholder {
+    font-size: medium;
+    color: gray;
+}
+.admin button {
+    border: none;
+    padding: 0.5em 1.5em ;
+    border-radius: 10px;
+    font-size: medium;
+    font-weight: 600;
+    color: white;
+    background-color: violet;
+}
